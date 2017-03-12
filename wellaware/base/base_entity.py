@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from collections import OrderedDict
 import json
 
-from wellaware._compat import add_metaclass
+from wellaware._compat import add_metaclass, array_types
 
 
 class JsonPropertyValueContainer(object):
@@ -31,9 +31,11 @@ class JsonProperty(object):
 
     value_container = JsonPropertyValueContainer
 
-    def __init__(self, json_name, property_name = None):
+    def __init__(self, json_name, property_name=None, klass=None, include_if_null=False):
         self._json_name = json_name
         self._property_name = property_name
+        self._klass = klass
+        self._include_if_null = include_if_null
 
     def set_property_name(self, property_name):
         self._property_name = property_name
@@ -48,6 +50,24 @@ class JsonProperty(object):
     def property_name(self):
         return self._property_name
 
+    @property
+    def klass(self):
+        return self._klass
+
+    @property
+    def include_if_null(self):
+        return self._include_if_null
+
+    def __str__(self):
+        return "JsonProperty(json_name={}, property_name={}, klass={}, include_if_null={})".format(
+            self._json_name, self._property_name, self._klass, self._include_if_null
+        )
+
+    def __unicode__(self):
+        return "JsonProperty(json_name={}, property_name={}, klass={}, include_if_null={})".format(
+            self._json_name, self._property_name, self._klass, self._include_if_null
+        )
+
 
 class EntityModelException(Exception):
     pass
@@ -58,38 +78,32 @@ class BaseAbstractEntity(object):
     The base abstract entity class, don't inherit from this, inherit from BaseEntity, defined below.
     """
 
-    _id = None
-
     def __init__(self, **values):
-        self._id = values.get('id')
         self._values = {}
+        #print "Got values: ", values, "with properties: ", self._properties
         for name, prop in self._properties.items():
-            value = values.get(name, None)
+            value = values.get(prop.json_name, values.get(name, None))
             value_container = prop.value_container(prop, value)
             self._values[name] = value_container
             setattr(self, name, value)
 
-    @property
-    def id(self):
-        """ Get the Id of hte entity
-
-        :return: id of entity
-        """
-        return self._id
-
     def __eq__(self, other):
-        if not isinstance(other, BaseAbstractEntity): # pragma: no cover
+        if not isinstance(other, BaseAbstractEntity):  # pragma: no cover
             return False
 
-        return self._id == other.id
+        return self.get_json_data() == other.get_json_data()
 
-    def __ne__(self, other):
+    def __ne__(self, other):  # pragma: no cover
         return not self.__eq__(other)
 
 
     @classmethod
     def from_json(cls, json_string):
-        return cls.__init__(json.loads(json_string))
+        return cls(**json.loads(json_string))
+
+    @classmethod
+    def from_dict(cls, json_dict):
+        return cls(**json_dict)
 
     def get_json_data(self):
         """
@@ -99,9 +113,28 @@ class BaseAbstractEntity(object):
         """
         result = {}
         for name, prop in self._properties.items():
-            result[name] = getattr(self, name, None)
-        if self.id is not None:
-            result['id'] = self.id
+            item = getattr(self, name, None)
+            if item is not None:
+                if isinstance(item, BaseAbstractEntity):
+                    item = item.get_json_data()
+                elif item is not None and isinstance(item, array_types):
+                    tmp = []
+                    for i in item:
+                        if isinstance(i, BaseAbstractEntity):
+                            tmp.append(i.get_json_data())
+                        else:
+                            tmp.append(i)
+                    item = tmp
+                elif item is not None and isinstance(item, dict):
+                    tmp = {}
+                    for k, v in item.items():
+                        if isinstance(v, BaseAbstractEntity):
+                            tmp[k] = v.get_json_data()
+                        else:
+                            tmp[k] = v
+                    item = tmp
+            if item is not None or prop.include_if_null:
+                result[prop.json_name] = item
         return result
 
     def to_json(self):
@@ -214,7 +247,63 @@ def collection_to_json(collection):
 
 @add_metaclass(BaseEntityMetaType)
 class BaseEntity(BaseAbstractEntity):
-    pass
+    _id = None
+
+    def __init__(self, **values):
+        self._id = values.pop('id', None)
+        super(BaseEntity, self).__init__(**values)
+
+    @property
+    def id(self):
+        """ Get the Id of the entity
+
+        :return: id of entity
+        """
+        return self._id
+
+    def __eq__(self, other):
+        if not isinstance(other, BaseAbstractEntity):  # pragma: no cover
+            return False
+
+        return self._id == other.id
+
+    def __ne__(self, other):  # pragma: no cover
+        return not self.__eq__(other)
+
+    def get_json_data(self):
+        """
+        Get the Dict of the properties
+
+        :return: dict of properties
+        """
+        result = {}
+        for name, prop in self._properties.items():
+            item = getattr(self, name, None)
+            if item is not None:
+                if isinstance(item, BaseAbstractEntity):
+                    item = item.get_json_data()
+                elif item is not None and isinstance(item, array_types):
+                    tmp = []
+                    for i in item:
+                        if isinstance(i, BaseAbstractEntity):
+                            tmp.append(i.get_json_data())
+                        else:
+                            tmp.append(i)
+                    item = tmp
+                elif item is not None and isinstance(item, dict):
+                    tmp = {}
+                    for k, v in item.items():
+                        if isinstance(v, BaseAbstractEntity):
+                            tmp[k] = v.get_json_data()
+                        else:
+                            tmp[k] = v
+                    item = tmp
+            if item is not None or prop.include_if_null:
+                result[prop.json_name] = item
+        if self.id is not None:
+            result['id'] = self.id
+        return result
 
 
-__all__ = ['BaseEntity', 'collection_to_json', 'EntityModelException', 'JsonProperty']
+__all__ = ['BaseEntity', 'BaseAbstractEntity', 'BaseEntityMetaType', 'collection_to_json', 'EntityModelException',
+           'JsonProperty']

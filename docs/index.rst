@@ -9,8 +9,8 @@ wellaware is a HTTPs client to the WellAware API.
 Links
 -----
 
-* Documentation: TODO
-* Official Repository: TODO
+* Documentation: https://bitbucket.org/wellaware/python_api_client/overview
+* Official Repository: https://bitbucket.org/wellaware/python_api_client.git
 * Package: TODO
 
 wellaware is known to support Python 2.7.
@@ -27,7 +27,7 @@ PyPI: TODO
 
     $ pip install wellaware
 
-Source: TODO
+Source: https://bitbucket.org/wellaware/python_api_client.git
 
 .. code-block:: sh
 
@@ -43,6 +43,7 @@ Contents
 
    Home <self>
    quickstart
+   internals/index
    changelog
 
 

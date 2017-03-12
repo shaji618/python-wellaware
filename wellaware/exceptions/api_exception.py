@@ -6,6 +6,6 @@ class ApiException(Exception):
 
     status_code = None
 
-    def __init__(self, status_code=None, *args, **kwargs):
+    def __init__(self, status_code=None, msg=None, *args, **kwargs):
         self.status_code = status_code
-        super(ApiException).__init__(self, *args, **kwargs)
+        super(ApiException, self).__init__(msg, *args, **kwargs)

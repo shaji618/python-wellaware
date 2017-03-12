@@ -3,5 +3,8 @@
 Quick Start
 ===========
 
-TODO
+An example app:
 
+.. literalinclude:: quickstart.py
+    :language: python
+    :linenos:

@@ -1,15 +1,5 @@
 #!/bin/sh
 
-OSS="`uname -s`"
-
-if [ $OSS == 'Linux']; then
-  VENV='venv/bin/activate'
-elif [ $OSS == 'Mac']; then
-  VENV='venv/bin/activate'
-else
-  VENV='venv/Scripts/activate'
-fi
-
-rm -Rf build/ dist/ wellaware.egg-info
-source $VENV && echo -e 'y\n' | pip uninstall api-client
-source $VENV && nosetests -vv --attr=unit
+rm -Rf build/ dist/ wellaware.egg-info coverage/ wellaware/tests/coverage/ html/ || true
+echo -e 'y\n' | pip uninstall wellaware
+nosetests -vv -w wellaware/tests --attr=unit

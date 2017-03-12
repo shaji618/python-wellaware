@@ -1,6 +1,6 @@
 .PHONY: clean-pyc ext-test test upload-docs docs coverage
 
-all: clean-pyc test
+all: clean test coverage
 
 test:
 	bash run_tests.sh
@@ -9,7 +9,7 @@ coverage:
 	bash run_coverage.sh
 
 release:
-	python scripts/make-release.py
+	bash deploy_to_pypi.sh
 
 tox-test:
 	PYTHONDONTWRITEBYTECODE= tox

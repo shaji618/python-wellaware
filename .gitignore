@@ -41,6 +41,8 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .coverage
+coverage/
+wellaware/tests/coverage
 .coverage.*
 .cache
 nosetests.xml
@@ -163,3 +165,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Sphinx
+html/

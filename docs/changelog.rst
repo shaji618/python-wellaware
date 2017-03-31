@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.2
+------
+  * Public Release Available.
+
 v1.2.1
 ------
   * Added Subject username to Control Audits and Control Points

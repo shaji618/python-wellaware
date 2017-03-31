@@ -1,7 +1,7 @@
 from wellaware.constants import Config
 from wellaware.client import *
 
-Config.base_url = 'https://api-<env>.wellaware.us'
+Config.base_url = 'https://api.wellaware.us'
 # Enable this commonly for QA tests where it's helpful to have the token printed along with the test
 Config.include_token = True
 

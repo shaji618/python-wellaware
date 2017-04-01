@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from wellaware._compat import add_metaclass
+from wellaware._compat import add_metaclass, long_
 from wellaware.base import BaseAbstractEntity, BaseEntity, BaseEntityMetaType, JsonProperty
 
 
@@ -26,7 +26,7 @@ class SiteGroupNotificationSetting(BaseAbstractEntity):
 
 @add_metaclass(BaseEntityMetaType)
 class SiteGroupNotificationResponse(BaseAbstractEntity):
-    settings = JsonProperty('settings', klass=SiteGroupNotificationSetting)
+    settings = JsonProperty('settings', klass=dict, dict_key_klass=long_, dict_value_klass=SiteGroupNotificationSetting)
 
 
 class SiteGroup(BaseEntity):

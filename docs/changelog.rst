@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.3
+------
+  * port of better deserialization feature
+
 v1.2.2
 ------
   * Public Release Available.

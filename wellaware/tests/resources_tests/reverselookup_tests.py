@@ -44,7 +44,7 @@ class ReverseLookupTests(BaseClientTestCase):
                                                'id': 10})
         multi_reverse_lookup = MultiReverseLookup(
             lookups=[reverse_lookup],
-            errorIds={11: HttpError(error_code=404, error_message="Not Found")}
+            errorIds={'11': HttpError(error_code=404, error_message="Not Found")}
         )
 
         resp = {'lookups': [

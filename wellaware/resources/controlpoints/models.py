@@ -31,9 +31,9 @@ class ControlPoint(BaseEntity):
     lower_numeric_bound = JsonProperty('lowerNumericBound')
     upper_numeric_bound = JsonProperty('upperNumericBound')
     string_length_bound = JsonProperty('stringLengthBound')
-    string_enumeration_bound = JsonProperty('stringEnumerationBound')
-    value_enumeration_bound = JsonProperty('valueEnumerationBound')
-    string_value_enumeration = JsonProperty('stringValueEnumeration')
+    string_enumeration_bound = JsonProperty('stringEnumerationBound', klass=list)
+    value_enumeration_bound = JsonProperty('valueEnumerationBound', klass=list)
+    string_value_enumeration = JsonProperty('stringValueEnumeration', klass=dict)
 
 
 @add_metaclass(BaseEntityMetaType)

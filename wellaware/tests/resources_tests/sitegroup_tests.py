@@ -109,7 +109,7 @@ class SiteGroupTests(BaseClientTestCase):
     @responses.activate
     def test_get_all_subject_notification_settings_of_sitegroup(self):
         sitegroup = SiteGroup(name='Test SiteGroup', id=10)
-        resp = {'settings': {100: {'notifyEmail': False, 'notifySms': True}}}
+        resp = {'settings': {'100': {'notifyEmail': False, 'notifySms': True}}}
         responses.add(
             responses.GET, 'http://localhost/sitegroups/10/subjects/rel/notifications',
             json=resp, status=204, match_querystring=True

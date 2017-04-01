@@ -89,10 +89,7 @@ class SiteGroups(BaseResource):
             params=parameters
         )
         response = cls.REST_CLIENT.handle_response(response)
-        settings = {}
-        for subject_id, setting in response.json()['settings'].items():
-            settings[long_(subject_id)] = SiteGroupNotificationSetting.from_dict(setting)
-        return SiteGroupNotificationResponse(settings=settings)
+        return SiteGroupNotificationResponse.from_dict(response.json())
 
     @classmethod
     def update_subject_notification_settings(cls, token, sitegroup_id, subject_id, notification_setting, parameters={}):

@@ -37,7 +37,7 @@ class DataRetrieveRequest(BaseAbstractEntity):
     end_timestamp = JsonProperty('end')
     order = JsonProperty('order')
     limit = JsonProperty('limit')
-    point_ids = JsonProperty('pointIds')
+    point_ids = JsonProperty('pointIds', klass=list)
 
 
 __all__ = ['Observation', 'RollupUpdate', 'DataRetrieveRequest']

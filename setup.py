@@ -27,14 +27,14 @@ wellaware is an API Client to the WellAware API: https://api.wellaware.us/docs
 
 `Documentation <https://wellaware.readthedocs.org/en/latest/>`_
 
-`Report a Bug <https://bitbucket.org/wellaware/python_api_client/issues>`_
+`Report a Bug <https://github.com/wellaware/python-wellaware/issues>`_
 """
 
 setup(
     name='wellaware',
     version=version,
     description='WellAware API Client',
-    dependency_links=['https://bitbucket.org/wellaware/python_api_client/archive/{0}.tar.gz#egg=wellaware-{0}'.format(version)],
+    dependency_links=['https://github.com/wellaware/python-wellaware/archive/{0}.tar.gz#egg=wellaware-{0}'.format(version)],
     long_description=long_desc,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -66,7 +66,7 @@ setup(
     author_email='codylee@wellaware.us',
     maintainer='Cody Lee',
     maintainer_email='codylee@wellaware.us',
-    url='https://bitbucket.org/wellaware/python_api_client',
+    url='https://github.com/wellaware/python-wellaware',
     license='Apache Software License 2.0',
     packages=find_packages(),
     include_package_data=True,

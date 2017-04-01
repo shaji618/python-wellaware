@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'wellaware'
-copyright = u'2017, Cody Lee'
+copyright = u'2017, WellAware Holdings Inc.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -209,7 +209,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'wellaware.tex', u'wellaware Documentation',
+    ('index', 'wellaware.tex', u'WellAware API Client Documentation',
      u'Cody Lee', 'manual'),
 ]
 
@@ -239,7 +239,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'wellaware', u'wellaware Documentation',
+    ('index', 'wellaware', u'WellAware API Client Documentation',
      [u'Cody Lee'], 1)
 ]
 
@@ -253,8 +253,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'wellaware', u'wellaware Documentation',
-     u'Cody Lee', 'wellaware', 'One line description of project.',
+    ('index', 'wellaware', u'WellAware API Client Documentation',
+     u'Cody Lee', 'wellaware', 'WellAware API Client',
      'Miscellaneous'),
 ]
 

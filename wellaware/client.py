@@ -42,3 +42,7 @@ from resources.controlaudits.resource import ControlAudits
 from resources.controlrules.resource import ControlRules
 from resources.reverselookups.resource import ReverseLookups
 from resources.data.resource import Data
+
+
+# Patterns
+from patterns.assets import AssetPatterns

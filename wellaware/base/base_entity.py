@@ -320,6 +320,14 @@ def collection_to_json(collection):
     return json.dumps(result)
 
 
+def json_collection_to_entity_collection(json_collection, entity_class):
+    results = []
+    if isinstance(json_collection, array_types):
+        for o in json_collection:
+            results.append(entity_class.from_dict(o))
+    return results
+
+
 @add_metaclass(BaseEntityMetaType)
 class BaseEntity(BaseAbstractEntity):
     _id = None
@@ -381,4 +389,4 @@ class BaseEntity(BaseAbstractEntity):
 
 
 __all__ = ['BaseEntity', 'BaseAbstractEntity', 'BaseEntityMetaType', 'collection_to_json', 'EntityModelException',
-           'JsonProperty']
+           'JsonProperty', 'json_collection_to_entity_collection']

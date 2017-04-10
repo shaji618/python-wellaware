@@ -5,6 +5,11 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.5
+------
+  * Added additional asset patterns
+  * Removed mutable parameter bug
+
 v1.2.4
 ------
   * Added asset patterns

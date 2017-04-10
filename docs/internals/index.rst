@@ -10,4 +10,5 @@ Reference
     base
     constants
     exceptions
+    patterns
     resources

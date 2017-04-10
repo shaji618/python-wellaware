@@ -1,7 +1,7 @@
 .. _internals_patterns:
 
-Resources
-=========
+Patterns
+========
 
 .. toctree::
     :maxdepth: 2

@@ -80,7 +80,7 @@ class AssetPatterns(BaseResource):
         """
         if parameters is None:
             parameters = {}
-        
+
         filtered_assets = cls.find_assets_by_asset_type(
             token=token, asset_type_filter=asset_type_filter, parameters=parameters
         )

@@ -40,4 +40,10 @@ class DataRetrieveRequest(BaseAbstractEntity):
     point_ids = JsonProperty('pointIds', klass=list)
 
 
-__all__ = ['Observation', 'RollupUpdate', 'DataRetrieveRequest']
+class DataOrdering(object):
+
+    DESCENDING = '-timestamp'
+    ASCENDING = '+timestamp'
+
+
+__all__ = ['Observation', 'RollupUpdate', 'DataRetrieveRequest', 'DataOrdering']

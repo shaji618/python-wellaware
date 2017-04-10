@@ -23,7 +23,7 @@ class ControlRules(BaseResource):
         return ControlRule
 
     @classmethod
-    def create(cls, token, site_id, asset_id, point_id, control_point_id, control_rule, parameters={}):
+    def create(cls, token, site_id, asset_id, point_id, control_point_id, control_rule, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
@@ -34,7 +34,7 @@ class ControlRules(BaseResource):
                                 'control_point_id': control_point_id})
 
     @classmethod
-    def retrieve_one(cls, token, site_id, asset_id, point_id, control_point_id, control_rule_id, parameters={}):
+    def retrieve_one(cls, token, site_id, asset_id, point_id, control_point_id, control_rule_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
@@ -45,17 +45,17 @@ class ControlRules(BaseResource):
                                       'control_point_id': control_point_id})
 
     @classmethod
-    def retrieve_all(cls, token, site_id, asset_id, point_id, control_point_id, parameters={}):
+    def retrieve_all(cls, token, site_id, asset_id, point_id, control_point_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
         control_point_id = cls.get_entity_id(control_point_id, ControlPoint)
-        return cls._retreive_all(token, parameters=parameters,
+        return cls._retrieve_all(token, parameters=parameters,
                                  ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
                                       'control_point_id': control_point_id})
 
     @classmethod
-    def update(cls, token, site_id, asset_id, point_id, control_point_id, control_rule, parameters={}):
+    def update(cls, token, site_id, asset_id, point_id, control_point_id, control_rule, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
@@ -66,7 +66,7 @@ class ControlRules(BaseResource):
                                 'control_point_id': control_point_id})
 
     @classmethod
-    def delete(cls, token, site_id, asset_id, point_id, control_point_id, control_rule_id, parameters={}):
+    def delete(cls, token, site_id, asset_id, point_id, control_point_id, control_rule_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)

@@ -48,13 +48,35 @@ def make_headers(token):
     return headers
 
 
+def make_default_offset_limit(parameters={}):
+    if parameters is None:
+        parameters = {}
+    if 'offset' not in parameters:
+        parameters['offset'] = 0
+    if 'limit' not in parameters:
+        parameters['limit'] = 1000
+
+
+def adjust_offset(parameters={}):
+    make_default_offset_limit(parameters=parameters)
+    parameters['offset'] += parameters['limit']
+
+
 def datetime_to_ms(dt):
     if isinstance(dt, integer_types):
         return dt
     else:
-        tmp = timegm(date.utctimetuple())
-        tmp += float(date.microsecond) / 1000000.0
+        tmp = timegm(dt.utctimetuple())
+        tmp += float(dt.microsecond) / 1000000.0
         return long_(tmp * 1000.0)
 
 
-__all__ = ['Config', 'make_headers', 'logger', 'datetime_to_ms']
+def chunk_list(iterable, size, pad_value=None):
+    result = []
+    for part in zip_longest(*[iter(iterable)]*size, fillvalue=pad_value):
+        result.append([r for r in part if r is not None])
+    return result
+
+
+__all__ = ['Config', 'make_headers', 'logger', 'datetime_to_ms', 'make_default_offset_limit',
+           'adjust_offset', 'chunk_list']

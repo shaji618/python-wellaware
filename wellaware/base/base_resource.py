@@ -6,7 +6,7 @@ from requests import exceptions as rexc
 
 from wellaware._compat import integer_types, float_types, array_types, string_types
 from wellaware.base.base_entity import BaseAbstractEntity
-from wellaware.constants import make_headers, Config, logger
+from wellaware.constants import make_headers, Config, logger, make_default_offset_limit
 from wellaware.exceptions import *
 
 
@@ -25,7 +25,11 @@ class RestClient(object):
     def _log(self, action, url, **kwargs):
         ctx = {'timeout': kwargs.get('timeout')}
         logger.debug(
-            "%s [%s] - %s", action, url, kwargs.get('json', json.dumps(kwargs.get('data', None))),
+            "%s [%s] (%s) - %s",
+            action,
+            url,
+            kwargs.get('params', None),
+            kwargs.get('json', json.dumps(kwargs.get('data', None))),
             extra=ctx
         )
 
@@ -241,7 +245,8 @@ class BaseResource(object):
             return cls.entity_class().from_dict(response.json())
 
     @classmethod
-    def _retreive_all(cls, token, parameters=None, ids={}):  # pragma: no cover
+    def _retrieve_all(cls, token, parameters=None, ids={}):  # pragma: no cover
+        make_default_offset_limit(parameters)
         response = cls.REST_CLIENT.get(
             cls.get_base_uri(cls.endpoint(), **ids), headers=make_headers(token), params=parameters
         )

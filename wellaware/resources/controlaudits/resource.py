@@ -23,36 +23,36 @@ class ControlAudits(BaseResource):
         return ControlAudit
 
     @classmethod
-    def retrieve_one(cls, token, site_id, asset_id, point_id, control_point_id, control_audit_id, parameters={}):
+    def retrieve_one(cls, token, site_id, asset_id, point_id, control_point_id, control_audit_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
         control_point_id = cls.get_entity_id(control_point_id, ControlPoint)
         control_audit_id = cls.get_entity_id(control_audit_id, ControlAudit)
         return cls._retreive_one(token, control_audit_id, parameters=parameters,
-                                  ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
-                                       'control_point_id': control_point_id})
+                                 ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
+                                      'control_point_id': control_point_id})
     
     @classmethod
-    def retrieve_all(cls, token, site_id, asset_id, point_id, control_point_id, parameters={}):
+    def retrieve_all(cls, token, site_id, asset_id, point_id, control_point_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
         control_point_id = cls.get_entity_id(control_point_id, ControlPoint)
-        return cls._retreive_all(token, parameters=parameters,
-                                  ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
-                                       'control_point_id': control_point_id})
+        return cls._retrieve_all(token, parameters=parameters,
+                                 ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
+                                      'control_point_id': control_point_id})
 
     @classmethod
-    def update(cls, token, site_id, asset_id, point_id, control_point_id, control_audit, parameters={}):
+    def update(cls, token, site_id, asset_id, point_id, control_point_id, control_audit, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
         control_point_id = cls.get_entity_id(control_point_id, ControlPoint)
         cls.validate_is_entity(control_audit, ControlAudit)
         return cls._update(token, control_audit, parameters=parameters,
-                            ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
-                                 'control_point_id': control_point_id})
+                           ids={'site_id': site_id, 'asset_id': asset_id, 'point_id': point_id,
+                                'control_point_id': control_point_id})
 
 
 __all__ = ['ControlAudit', 'ControlAudits']

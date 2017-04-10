@@ -6,7 +6,7 @@ from wellaware.constants import make_headers, datetime_to_ms
 from wellaware.base.base_entity import collection_to_json
 from wellaware.base.base_resource import BaseResource
 from wellaware.resources.common import HttpError
-from wellaware.resources.data.data_models import Observation, RollupUpdate
+from wellaware.resources.data.data_models import Observation, RollupUpdate, DataOrdering
 from wellaware.resources.data.data_errors import DataModificationError, DataRetrieveError, DataSaveError, \
     RollupUpdateError
 from wellaware.resources.data.data_responses import DataRetrieveResponse, DataModificationResponse, \
@@ -45,7 +45,7 @@ class Data(BaseResource):
         return cls.endpoint() + '/rollup'
 
     @classmethod
-    def save_new_data(cls, token, observations, parameters={}):
+    def save_new_data(cls, token, observations, parameters=None):
         cls.validate_is_entity(observations, array_types)
         for observation in observations:
             cls.validate_is_entity(observation, Observation)
@@ -67,7 +67,7 @@ class Data(BaseResource):
         return DataSaveResponse(errors=e)
 
     @classmethod
-    def update_data(cls, token, observations, parameters={}):
+    def update_data(cls, token, observations, parameters=None):
         cls.validate_is_entity(observations, array_types)
         for observation in observations:
             cls.validate_is_entity(observation, Observation)
@@ -89,7 +89,7 @@ class Data(BaseResource):
         return DataModificationResponse(errors=e)
 
     @classmethod
-    def delete_data(cls, token, observations, parameters={}):
+    def delete_data(cls, token, observations, parameters=None):
         cls.validate_is_entity(observations, array_types)
         for observation in observations:
             cls.validate_is_entity(observation, Observation)
@@ -111,8 +111,10 @@ class Data(BaseResource):
         return DataModificationResponse(errors=e)
 
     @classmethod
-    def replay_data(cls, token, point_ids, start=None, end=None, limit=None, offset=None, parameters={}):
+    def replay_data(cls, token, point_ids, start=None, end=None, limit=None, offset=None, parameters=None):
         cls.validate_is_entity(point_ids, array_types)
+        if parameters is None:
+            parameters = {}
         ids = []
         for point_id in point_ids:
             ids.append(cls.get_entity_id(point_id, Point))
@@ -148,8 +150,10 @@ class Data(BaseResource):
         return DataRetrieveResponse(errors=errors, observations={})
 
     @classmethod
-    def retrieve_data(cls, token, point_ids, start=None, end=None, limit=None, offset=None, order=None, parameters={}):
+    def retrieve_data(cls, token, point_ids, start=None, end=None, limit=None, offset=None, order=None, parameters=None):
         cls.validate_is_entity(point_ids, array_types)
+        if parameters is None:
+            parameters = {}
         ids = []
         for point_id in point_ids:
             ids.append(cls.get_entity_id(point_id, Point))
@@ -168,7 +172,7 @@ class Data(BaseResource):
         if offset is not None and isinstance(offset, integer_types) and offset > 0:
             parameters['offset'] = offset
 
-        if order in ['-timestamp', '+timestamp']:
+        if order in [DataOrdering.DESCENDING, DataOrdering.ASCENDING]:
             parameters['order'] = order
 
         response = cls.REST_CLIENT.post(
@@ -196,7 +200,7 @@ class Data(BaseResource):
         return DataRetrieveResponse(observations=observations, errors=errors)
 
     @classmethod
-    def rollup_date(cls, token, rollup_updates, parameters={}):
+    def rollup_date(cls, token, rollup_updates, parameters=None):
         cls.validate_is_entity(rollup_updates, array_types)
         for rollup_update in rollup_updates:
             cls.validate_is_entity(rollup_update, RollupUpdate)

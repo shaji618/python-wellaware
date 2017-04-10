@@ -22,7 +22,7 @@ from resources.controlpoints.models import ControlPoint, SetPointRequest
 from resources.controlaudits.models import ControlAudit, ControlRequestType
 from resources.controlrules.models import ControlRule, ControlRuleType, ControlRuleTargetDirectionMatch
 from resources.reverselookups.models import ReverseLookup, MultiReverseLookup
-from resources.data.data_models import Observation, RollupUpdate
+from resources.data.data_models import Observation, RollupUpdate, DataOrdering
 from resources.data.data_responses import DataModificationResponse, DataRetrieveResponse, DataSaveResponse, \
     RollupUpdateResponse
 from resources.data.data_errors import DataRetrieveError, DataModificationError, DataSaveError, RollupUpdateError

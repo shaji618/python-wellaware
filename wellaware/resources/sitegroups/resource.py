@@ -27,32 +27,34 @@ class SiteGroups(BaseResource):
         return SiteGroup
 
     @classmethod
-    def create(cls, token, sitegroup, parameters={}):
+    def create(cls, token, sitegroup, parameters=None):
         cls.validate_is_entity(sitegroup, SiteGroup)
         return cls._create(token, sitegroup, parameters=parameters)
 
     @classmethod
-    def retrieve_one(cls, token, sitegroup_id, parameters={}):
+    def retrieve_one(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         return cls._retreive_one(token, sitegroup_id, parameters=parameters)
 
     @classmethod
-    def retrieve_all(cls, token, parameters={}):
-        return cls._retreive_all(token, parameters=parameters)
+    def retrieve_all(cls, token, parameters=None):
+        return cls._retrieve_all(token, parameters=parameters)
 
     @classmethod
-    def update(cls, token, sitegroup, parameters={}):
+    def update(cls, token, sitegroup, parameters=None):
         cls.validate_is_entity(sitegroup, SiteGroup)
         return cls._update(token, sitegroup, parameters=parameters)
 
     @classmethod
-    def delete(cls, token, sitegroup_id, parameters={}):
+    def delete(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         return cls._delete(token, sitegroup_id, parameters=parameters)
 
     # Subject relationships
     @classmethod
-    def assign_subject_to_sitegroup(cls, token, sitegroup_id, subject_id, notification_setting, parameters={}):
+    def assign_subject_to_sitegroup(cls, token, sitegroup_id, subject_id, notification_setting, parameters=None):
+        if parameters is None:
+            parameters = {}
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         subject_id = cls.get_entity_id(subject_id, Subject)
         cls.validate_is_entity(notification_setting, SiteGroupNotificationSetting)
@@ -68,7 +70,7 @@ class SiteGroups(BaseResource):
         return response
 
     @classmethod
-    def get_all_subject_ids_of_sitegroup(cls, token, sitegroup_id, parameters={}):
+    def get_all_subject_ids_of_sitegroup(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         ids = {'id': sitegroup_id}
         response = cls.REST_CLIENT.get(
@@ -80,7 +82,7 @@ class SiteGroups(BaseResource):
         return response.json()
 
     @classmethod
-    def get_all_subject_notification_settings_of_sitegroup(cls, token, sitegroup_id, parameters={}):
+    def get_all_subject_notification_settings_of_sitegroup(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         ids = {'id': sitegroup_id}
         response = cls.REST_CLIENT.get(
@@ -92,7 +94,9 @@ class SiteGroups(BaseResource):
         return SiteGroupNotificationResponse.from_dict(response.json())
 
     @classmethod
-    def update_subject_notification_settings(cls, token, sitegroup_id, subject_id, notification_setting, parameters={}):
+    def update_subject_notification_settings(cls, token, sitegroup_id, subject_id, notification_setting, parameters=None):
+        if parameters is None:
+            parameters = {}
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         subject_id = cls.get_entity_id(subject_id, Subject)
         cls.validate_is_entity(notification_setting, SiteGroupNotificationSetting)
@@ -108,7 +112,7 @@ class SiteGroups(BaseResource):
         return response
 
     @classmethod
-    def remove_subject_from_sitegroup(cls, token, sitegroup_id, subject_id, parameters={}):
+    def remove_subject_from_sitegroup(cls, token, sitegroup_id, subject_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         subject_id = cls.get_entity_id(subject_id, Subject)
         ids = {'id': sitegroup_id, 'subject_id': subject_id}
@@ -122,7 +126,7 @@ class SiteGroups(BaseResource):
 
     # Sites
     @classmethod
-    def get_site_ids_in_sitegroup(cls, token, sitegroup_id, parameters={}):
+    def get_site_ids_in_sitegroup(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         ids = {'id': sitegroup_id}
         response = cls.REST_CLIENT.get(
@@ -134,7 +138,7 @@ class SiteGroups(BaseResource):
         return response.json()
 
     @classmethod
-    def assign_site_to_sitegroup(cls, token, sitegroup_id, site_id, parameters={}):
+    def assign_site_to_sitegroup(cls, token, sitegroup_id, site_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         site_id = cls.get_entity_id(site_id, Site)
         ids = {'id': sitegroup_id, 'site_id': site_id}
@@ -147,7 +151,7 @@ class SiteGroups(BaseResource):
         return response
 
     @classmethod
-    def remove_site_from_sitegroup(cls, token, sitegroup_id, site_id, parameters={}):
+    def remove_site_from_sitegroup(cls, token, sitegroup_id, site_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         site_id = cls.get_entity_id(site_id, Site)
         ids = {'id': sitegroup_id, 'site_id': site_id}
@@ -161,7 +165,7 @@ class SiteGroups(BaseResource):
 
     # Summary Config
     @classmethod
-    def get_sitegroup_view_config(cls, token, sitegroup_id, parameters={}):
+    def get_sitegroup_view_config(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         ids = {'id': sitegroup_id}
         response = cls.REST_CLIENT.get(
@@ -181,7 +185,7 @@ class SiteGroups(BaseResource):
         return SiteGroupViewConfig(summaries=results)
 
     @classmethod
-    def update_sitegroup_view_config(cls, token, sitegroup_id, view_config, parameters={}):
+    def update_sitegroup_view_config(cls, token, sitegroup_id, view_config, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         cls.validate_is_entity(view_config, SiteGroupViewConfig)
         for summary in view_config.summaries:
@@ -205,7 +209,7 @@ class SiteGroups(BaseResource):
         return SiteGroupViewConfig(summaries=results)
 
     @classmethod
-    def delete_sitegroup_view_config(cls, token, sitegroup_id, parameters={}):
+    def delete_sitegroup_view_config(cls, token, sitegroup_id, parameters=None):
         sitegroup_id = cls.get_entity_id(sitegroup_id, SiteGroup)
         ids = {'id': sitegroup_id}
         response = cls.REST_CLIENT.delete(

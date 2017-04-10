@@ -21,34 +21,34 @@ class Points(BaseResource):
         return Point
 
     @classmethod
-    def create(cls, token, site_id, asset_id, point, parameters={}):
+    def create(cls, token, site_id, asset_id, point, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         cls.validate_is_entity(point, Point)
         return cls._create(token, point, parameters=parameters, ids={'site_id': site_id, 'asset_id': asset_id})
 
     @classmethod
-    def retrieve_one(cls, token, site_id, asset_id, point_id, parameters={}):
+    def retrieve_one(cls, token, site_id, asset_id, point_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)
         return cls._retreive_one(token, point_id, parameters=parameters, ids={'site_id': site_id, 'asset_id': asset_id})
 
     @classmethod
-    def retrieve_all(cls, token, site_id, asset_id, parameters={}):
+    def retrieve_all(cls, token, site_id, asset_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
-        return cls._retreive_all(token, parameters=parameters, ids={'site_id': site_id, 'asset_id': asset_id})
+        return cls._retrieve_all(token, parameters=parameters, ids={'site_id': site_id, 'asset_id': asset_id})
 
     @classmethod
-    def update(cls, token, site_id, asset_id, point, parameters={}):
+    def update(cls, token, site_id, asset_id, point, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         cls.validate_is_entity(point, Point)
         return cls._update(token, point, parameters=parameters, ids={'site_id': site_id, 'asset_id': asset_id})
 
     @classmethod
-    def delete(cls, token, site_id, asset_id, point_id, parameters={}):
+    def delete(cls, token, site_id, asset_id, point_id, parameters=None):
         site_id = cls.get_entity_id(site_id, Site)
         asset_id = cls.get_entity_id(asset_id, Asset)
         point_id = cls.get_entity_id(point_id, Point)

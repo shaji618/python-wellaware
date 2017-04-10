@@ -33,3 +33,5 @@ print_ = six.print_
 urllib = six.moves.urllib
 
 get_method_self = six.get_method_self
+
+zip_longest = six.moves.zip_longest

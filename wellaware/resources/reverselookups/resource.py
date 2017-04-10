@@ -22,7 +22,9 @@ class ReverseLookups(BaseResource):
         return ReverseLookup
 
     @classmethod
-    def lookup(cls, token, entity_id, expand=False, parameters={}):
+    def lookup(cls, token, entity_id, expand=False, parameters=None):
+        if parameters is None:
+            parameters = {}
         parameters['id'] = cls.get_entity_id(entity_id, ReverseLookup)
         parameters['expand'] = expand
 
@@ -36,7 +38,9 @@ class ReverseLookups(BaseResource):
         return ReverseLookup.from_dict(response.json())
 
     @classmethod
-    def multi_lookup(cls, token, entity_ids, expand=False, parameters={}):
+    def multi_lookup(cls, token, entity_ids, expand=False, parameters=None):
+        if parameters is None:
+            parameters = {}
         parameters['expand'] = expand
         ids = []
         for entity_id in entity_ids:

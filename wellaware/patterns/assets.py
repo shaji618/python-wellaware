@@ -52,7 +52,7 @@ class AssetPatterns(BaseResource):
 
         assets = filter_fetch_assets()
 
-        if len(assets) == parameters['limit']:
+        if len(assets) == parameters['limit']:   # pragma: no cover
             while True:
                 adjust_offset(parameters=parameters)
                 next_assets = filter_fetch_assets()

@@ -17,16 +17,18 @@ class Tokens(object):
             return endpoint.format(**id_dict)
         return endpoint
 
-    def login(self, username, password, expires=True, parameters={}):
+    @classmethod
+    def login(cls, username, password, expires=True, parameters=None):
         form_data = {'username': username, 'password': password, 'expires': expires}
-        response = self.REST_CLIENT.post(
-            self.get_base_uri(self.ENDPOINT), data=form_data, headers=Config.auth_headers, params=parameters
+        response = cls.REST_CLIENT.post(
+            cls.get_base_uri(cls.ENDPOINT), data=form_data, headers=Config.auth_headers, params=parameters
         )
 
-        response = self.REST_CLIENT.handle_response(response)
+        response = cls.REST_CLIENT.handle_response(response)
         return Token(jwt=response.json()['token'])
 
-    def impersonate(self, token, tenant_id=None, subject_id=None, role=None, expires=True, parameters={}):
+    @classmethod
+    def impersonate(cls, token, tenant_id=None, subject_id=None, role=None, expires=True, parameters=None):
         data = {'expires': expires}
         if tenant_id is not None and role is not None:
             data['tenantId'] = tenant_id
@@ -36,9 +38,9 @@ class Tokens(object):
         else:
             raise InvalidInputException(422, "Must provide either tenant_id and role OR subject_id")
 
-        response = self.REST_CLIENT.post(
-            self.get_base_uri(self.ENDPOINT), data=data, headers=make_headers(token), params=parameters
+        response = cls.REST_CLIENT.post(
+            cls.get_base_uri(cls.ENDPOINT), data=data, headers=make_headers(token), params=parameters
         )
 
-        response = self.REST_CLIENT.handle_response(response)
+        response = cls.REST_CLIENT.handle_response(response)
         return Token(jwt=response.json()['token'])

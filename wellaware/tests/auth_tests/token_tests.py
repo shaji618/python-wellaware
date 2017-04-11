@@ -12,7 +12,7 @@ class TokenTests(BaseClientTestCase):
         resp = {'token': WA_ADMIN_TOKEN }
         responses.add(responses.POST, 'http://localhost/tokens', json=resp, status=200)
 
-        token = Tokens().login("admin@wellaware.us", "test")
+        token = Tokens.login("admin@wellaware.us", "test")
         self.assertIsInstance(token, Token)
         self.assertTrue(len(token.jwt) > 0)
         self.assertEquals('jzQrLHA50XTh18zwbTg6hRvYSWgBv40K', token.audience)
@@ -49,7 +49,7 @@ class TokenTests(BaseClientTestCase):
 
         auth_token = Token(WA_ADMIN_TOKEN)
 
-        token = Tokens().impersonate(auth_token, tenant_id=1, role='Admin')
+        token = Tokens.impersonate(auth_token, tenant_id=1, role='Admin')
         self.assertIsInstance(token, Token)
 
     @attr('unit', 'tokens')
@@ -60,5 +60,5 @@ class TokenTests(BaseClientTestCase):
 
         auth_token = Token(WA_ADMIN_TOKEN)
 
-        token = Tokens().impersonate(auth_token, subject_id=1)
+        token = Tokens.impersonate(auth_token, subject_id=1)
         self.assertIsInstance(token, Token)

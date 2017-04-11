@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.6
+------
+  * Updated Tokens resource to use classmethods like the other resources
+
 v1.2.5
 ------
   * Added additional asset patterns

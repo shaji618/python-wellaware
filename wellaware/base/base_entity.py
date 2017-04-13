@@ -173,7 +173,7 @@ class BaseAbstractEntity(object):
         return not self.__eq__(other)
 
     @classmethod
-    def from_json(cls, json_string):  # pragma: no cover
+    def from_json(cls, json_string):
         return cls(**json.loads(json_string))
 
     @classmethod
@@ -264,7 +264,10 @@ class BaseAbstractEntity(object):
 
     def __unicode__(self):
         class_name = self.__class__.__name__
-        return '{}({})'.format(class_name, self.items())
+        property_string = ", ".join(
+            sorted(["{}={}".format(key, value) for key, value in self.items()])
+        )
+        return '{}({})'.format(class_name, property_string)
 
     def __str__(self):
         return self.__unicode__()
@@ -394,8 +397,19 @@ class BaseEntity(BaseAbstractEntity):
             result['id'] = self.id
         return result
 
+    def keys(self):
+        result = super(BaseEntity, self).keys()
+        result.append('id')
+        return result
+
+    def values(self):
+        result = super(BaseEntity, self).values()
+        result.append(self.id)
+        return result
+
     def items(self):
-        result = super(BaseEntity, self).items().append(('id', self.id))
+        result = super(BaseEntity, self).items()
+        result.append(('id', self.id))
         return result
 
 

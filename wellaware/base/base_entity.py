@@ -262,6 +262,13 @@ class BaseAbstractEntity(object):
             items.append(getattr(self, key))
         return items
 
+    def __unicode__(self):
+        class_name = self.__class__.__name__
+        return '{}({})'.format(class_name, self.items())
+
+    def __str__(self):
+        return self.__unicode__()
+
 
 class BaseEntityMetaType(type):
     def __new__(mcs, name, bases, body):
@@ -385,6 +392,10 @@ class BaseEntity(BaseAbstractEntity):
                 result[prop.json_name] = item
         if self.id is not None:
             result['id'] = self.id
+        return result
+
+    def items(self):
+        result = super(BaseEntity, self).items().append(('id', self.id))
         return result
 
 

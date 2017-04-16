@@ -272,6 +272,9 @@ class BaseAbstractEntity(object):
     def __str__(self):
         return self.__unicode__()
 
+    def __repr__(self):
+        return self.__unicode__()
+
 
 class BaseEntityMetaType(type):
     def __new__(mcs, name, bases, body):

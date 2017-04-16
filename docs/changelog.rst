@@ -5,6 +5,10 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.9
+------
+  * Better console print representation by overriding __repr__
+
 v1.2.8
 ------
   * Better coverage and fixed dictionary-like function bugs

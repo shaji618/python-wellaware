@@ -5,6 +5,11 @@ ChangeLog
 
 Changes to the library are recorded here.
 
+v1.2.10
+------
+  * Remove internal impersonate tool
+
+
 v1.2.9
 ------
   * Better console print representation by overriding __repr__

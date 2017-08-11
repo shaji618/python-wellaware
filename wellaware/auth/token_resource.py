@@ -26,21 +26,3 @@ class Tokens(object):
 
         response = cls.REST_CLIENT.handle_response(response)
         return Token(jwt=response.json()['token'])
-
-    @classmethod
-    def impersonate(cls, token, tenant_id=None, subject_id=None, role=None, expires=True, parameters=None):
-        data = {'expires': expires}
-        if tenant_id is not None and role is not None:
-            data['tenantId'] = tenant_id
-            data['role'] = role
-        elif subject_id is not None:
-            data['subjectId'] = subject_id
-        else:
-            raise InvalidInputException(422, "Must provide either tenant_id and role OR subject_id")
-
-        response = cls.REST_CLIENT.post(
-            cls.get_base_uri(cls.ENDPOINT), data=data, headers=make_headers(token), params=parameters
-        )
-
-        response = cls.REST_CLIENT.handle_response(response)
-        return Token(jwt=response.json()['token'])

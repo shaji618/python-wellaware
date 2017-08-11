@@ -39,26 +39,3 @@ class TokenTests(BaseClientTestCase):
             ['*:*:*', 'tokens', 'reverseLookup:retrieve', 'impersonate:*', '*:retrieve:*'],
             token.permissions
         )
-
-
-    @attr('unit', 'tokens')
-    @responses.activate
-    def test_impersonate_tenant_and_role(self):
-        resp = {'token': WA_ADMIN_TOKEN}
-        responses.add(responses.POST, 'http://localhost/tokens', json=resp, status=200)
-
-        auth_token = Token(WA_ADMIN_TOKEN)
-
-        token = Tokens.impersonate(auth_token, tenant_id=1, role='Admin')
-        self.assertIsInstance(token, Token)
-
-    @attr('unit', 'tokens')
-    @responses.activate
-    def test_impersonate_subject(self):
-        resp = {'token': WA_ADMIN_TOKEN}
-        responses.add(responses.POST, 'http://localhost/tokens', json=resp, status=200)
-
-        auth_token = Token(WA_ADMIN_TOKEN)
-
-        token = Tokens.impersonate(auth_token, subject_id=1)
-        self.assertIsInstance(token, Token)
